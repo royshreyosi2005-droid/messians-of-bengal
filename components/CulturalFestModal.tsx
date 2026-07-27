@@ -67,7 +67,7 @@ export default function CulturalFestModal({
  
 
   <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-300">
-    Celebrating talent, Friendship, teamwork and unforgettable
+    Celebrating talent, friendship, teamwork and unforgettable
     memories that continue to inspire every Messian.
   </p>
 

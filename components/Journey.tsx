@@ -3,9 +3,11 @@ import { useState } from "react";
 import SectionOverlay from "./SectionOverlay";
 import BirthdayModal from "./BirthdayModal";
 import CulturalFestModal from "@/components/CulturalFestModal";
+import HistoricMomentsModal from "@/components/HistoricMomentsModal";
 export default function Journey() {
   const [showBirthdayModal, setShowBirthdayModal] = useState(false);
   const [showCulturalFestModal, setShowCulturalFestModal] = useState(false);
+  const [showHistoricMomentsModal, setShowHistoricMomentsModal] = useState(false);
   return (
     <section
       id="journey"
@@ -54,10 +56,12 @@ export default function Journey() {
             Cultural Events
           </button>
 
-          <button className="min-w-[320px] h-24 rounded-full border border-sky-500/30 bg-[#0A1630]/70 px-10 text-center text-lg font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.15)] backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-sky-400 hover:bg-[#0E2247]/90 hover:shadow-[0_0_35px_rgba(37,99,235,0.35)]">
-            Historic Moments
-          </button>
-
+          <button
+  onClick={() => setShowHistoricMomentsModal(true)}
+  className="min-w-[320px] h-24 rounded-full border border-sky-500/30 bg-[#0A1630]/70 px-10 text-center text-lg font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.15)] backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-sky-400 hover:bg-[#0E2247]/90 hover:shadow-[0_0_35px_rgba(37,99,235,0.35)]"
+>
+  Historic Moments
+</button>
         </div>
 
       </div>
@@ -70,6 +74,10 @@ export default function Journey() {
 <CulturalFestModal
   isOpen={showCulturalFestModal}
   onClose={() => setShowCulturalFestModal(false)}
+/>
+<HistoricMomentsModal
+  isOpen={showHistoricMomentsModal}
+  onClose={() => setShowHistoricMomentsModal(false)}
 />
     </section>
   );

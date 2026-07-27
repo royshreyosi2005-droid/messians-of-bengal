@@ -51,25 +51,26 @@ export default function HistoricMomentsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
-      <div className="relative w-[90%] max-w-6xl rounded-3xl bg-[#08111f] p-8">
-        <h2 className="text-center text-4xl font-bold text-cyan-300">
-          Historic Moments
-        </h2>
-        <button
+     <div className="relative w-[95%] max-w-7xl min-h-[700px] rounded-3xl bg-[#08111f] p-10">
+ <button
   onClick={onClose}
-  className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-cyan-500 text-xl font-bold text-white transition hover:bg-cyan-400"
+  className="absolute -right-25 -top-2 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-cyan-400/30 bg-[#07111f]/90 text-xl text-white shadow-[0_0_20px_rgba(34,211,238,0.25)] backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:border-cyan-300 hover:bg-cyan-500/20"
 >
-  ×
+   ✕
 </button>
-<div className="mt-10 flex justify-center">
-  <div className="overflow-hidden rounded-3xl">
-    <div className="flex gap-8">
+        <h2 className="text-center text-5xl font-extrabold tracking-wide text-white md:text-6xl">
+  Historic Moments
+</h2>
+       
+<div className="mt-10 flex justify-center translate-y-15">
+  <div className="w-[95%] mx-12 mb-8 overflow-hidden rounded-3xl">
+    <div className="historic-slider flex gap-8">
       {infiniteHistoricMoments.map((item, index) => (
         <div
           key={index}
-          className="w-[850px] flex-shrink-0 overflow-hidden rounded-3xl border border-cyan-400/20 bg-[#0b1728]"
+          className="w-[650px] flex-shrink-0 overflow-hidden rounded-3xl border border-cyan-400/20 bg-[#0b1728]"
         >
-          <div className="relative h-[500px] w-full">
+          <div className="relative h-[450px] w-full">
             <Image
               src={item.image}
               alt={item.place}

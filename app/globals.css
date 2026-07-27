@@ -107,3 +107,23 @@ section {
 .picnic-slider:hover {
   animation-play-state: paused;
 }
+/* Historic Moments Infinite Slider */
+
+.historic-slider {
+  width: max-content;
+  animation: historicSlide 35s linear infinite;
+}
+
+.historic-slider:hover {
+  animation-play-state: paused;
+}
+
+@keyframes historicSlide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
