@@ -15,7 +15,7 @@ const historicMoments = [
   },
   {
     image: "/historic/H4.jpg",
-    place: "Rudraanath",
+    place: "Rudranath",
   },
   {
     image: "/historic/H5.jpg",
@@ -27,12 +27,28 @@ const historicMoments = [
   },
   {
     image: "/historic/H7.jpg",
-    place: "Rudraanath",
+    place: "Rudranath",
   },
    {
     image: "/historic/H8.jpg",
     place: "Kedarnath",
   },
+   {
+  image: "/historic/H9.jpg",
+  title: "Kedarkantha",
+},
+{
+  image: "/historic/H10.jpg",
+  title: "Hamta Pass",
+},
+{
+  image: "/historic/H11.jpg",
+  title: "Puri Jagannath Mandir",
+},
+{
+  image: "/historic/H12.jpg",
+  title: "Puri Jagannath Mandir",
+},
 ];
 const infiniteHistoricMoments = [
   ...historicMoments,
@@ -64,24 +80,24 @@ export default function HistoricMomentsModal({
        
 <div className="mt-10 flex justify-center translate-y-15">
   <div className="w-[95%] mx-12 mb-8 overflow-hidden rounded-3xl">
-    <div className="historic-slider flex gap-8">
+    <div className="historic-slider flex gap-8 items-center">
       {infiniteHistoricMoments.map((item, index) => (
         <div
           key={index}
-          className="w-[650px] flex-shrink-0 overflow-hidden rounded-3xl border border-cyan-400/20 bg-[#0b1728]"
+          className="historic-card w-[650px] flex-shrink-0 overflow-hidden rounded-3xl border border-cyan-400/20 bg-[#0b1728]"
         >
           <div className="relative h-[450px] w-full">
             <Image
               src={item.image}
-              alt={item.place}
+              alt={item.title || item.place || "Historic Image"}
               fill
-              className="object-cover"
+              className="object-cover object-center"
             />
           </div>
 
           <div className="py-5 text-center">
             <p className="text-lg font-semibold text-cyan-200">
-              📍 {item.place}
+              📍{item.title || item.place || "Historic Image"}
             </p>
           </div>
         </div>

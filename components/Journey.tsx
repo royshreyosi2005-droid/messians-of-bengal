@@ -41,7 +41,7 @@ export default function Journey() {
         </p>
 
         {/* Journey Highlights */}
-        <div className="mt-16 flex w-full flex-wrap items-center justify-center gap-6">
+        <div className="mt-16 flex w-full translate-y-5 flex-wrap items-center justify-center gap-6">
 
           <button
            onClick={() => setShowBirthdayModal(true)}

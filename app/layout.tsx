@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -27,16 +28,7 @@ export default function RootLayout({
   return (
    <html lang="en" className={plusJakarta.variable}>
       <body>
-        {/* Fixed Background */}
-        <div className="fixed inset-0 -z-10">
-          <div
-            className="h-full w-full bg-cover bg-center bg-fixed"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(5,20,55,0.45), rgba(5,20,55,0.45)), url('/images/messi-collage.jpg')",
-            }}
-          />
-        </div>
+        <AnimatedBackground />
 
         {children}
       </body>

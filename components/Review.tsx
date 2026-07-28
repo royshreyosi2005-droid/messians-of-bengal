@@ -70,7 +70,9 @@ export default function Reviews() {
             onChange={(e) => setName(e.target.value)}
             className="h-12 rounded-xl border border-white/10 bg-slate-950/30 px-5 text-center text-lg text-white placeholder:text-slate-500 outline-none transition duration-300 focus:border-sky-400"
           />
-
+<p className="text-center text-lg text-slate-300">
+  Rate Your Experience
+</p>
           <div className="flex justify-center gap-3">
   {[1, 2, 3, 4, 5].map((star) => (
     <button
@@ -109,39 +111,45 @@ export default function Reviews() {
 
         {/* Latest Reviews */}
 
-        <div className="mt-20 flex w-full flex-col items-center">
+        <div className="mt-20 flex w-full translate-y-4 flex-col items-center">
 
-          <h3 className="text-center text-3xl font-black uppercase text-white">
+          <h3 className="text-center text-3xl font-black  uppercase text-white">
             Latest Reviews
           </h3>
 
           {reviews.length === 0 ? (
 
-            <div className="mt-8 flex w-full max-w-3xl flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950/35 p-12 text-center backdrop-blur-2xl">
+           <div className="mt-8 flex w-full max-w-3xl flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950/35 p-12 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]">
 
-              <div className="text-6xl">💙</div>
+              <div className="text-5xl">⭐</div>
 
-              <h4 className="mt-6 text-2xl font-bold text-white">
-                No Reviews Yet
-              </h4>
+             <h4 className="mt-6 text-2xl font-black uppercase text-white">
+  No Reviews Yet
+</h4>
 
               <p className="mt-3 max-w-lg text-center leading-7 text-slate-300">
-                Be the first person to share your experience with
-                <br />
-                Messians of Bengal.
-              </p>
+  Be the first to share your experience with Messians of Bengal.
+</p>
 
             </div>
 
           ) : (
 
-            <div className="mt-10 flex w-full flex-col items-center gap-6">
+            <div
+  className={`mt-8 translate-y-2 grid w-full gap-6 ${
+    reviews.length === 1
+      ? "max-w-xl mx-auto grid-cols-1"
+      : reviews.length === 2
+      ? "max-w-4xl mx-auto grid-cols-2"
+      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+  }`}
+>
 
               {reviews.slice(0, 3).map((review, index) => (
 
                 <div
                   key={index}
-                  className="w-full max-w-3xl rounded-3xl border border-white/10 bg-slate-950/35 p-8 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]"
+                  className="w-full rounded-3xl border border-white/10 bg-slate-950/35 p-8 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]"
                 >
 
                   <div className="mb-4 flex justify-center text-2xl">

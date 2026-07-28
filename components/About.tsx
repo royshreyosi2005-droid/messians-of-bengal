@@ -38,7 +38,7 @@ export default function About() {
         {/* Divider */}
         {/* <div className="mx-auto mt-10 h-px w-40 bg-gradient-to-r from-transparent via-sky-400 to-transparent" /> */}
         {/* Stats */}
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-6 translate-y-5 md:grid-cols-3">
 
           {/* Founded */}
           <div className="group overflow-hidden rounded-3xl border border-white/10 bg-slate-950/45 p-8 backdrop-blur-lg transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/30 hover:bg-slate-950/55 hover:shadow-[0_0_25px_rgba(56,189,248,0.12)]">

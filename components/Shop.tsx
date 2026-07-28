@@ -1,17 +1,45 @@
+"use client";
 import SectionOverlay from "./SectionOverlay";
+import Image from "next/image";
+import { useState } from "react";
 export default function Shop() {
+  const [frontImage, setFrontImage] = useState({
+  1: 0,
+  2: 0,
+});
+
+const [backImage, setBackImage] = useState({
+  1: 0,
+  2: 0,
+});
   const jerseys = [
-    {
-      id: 1,
-      price: "₹499",
-      soldOut: true,
-    },
-    {
-      id: 2,
-      price: "₹550",
-      soldOut: true,
-    },
-  ];
+  {
+    id: 1,
+    price: "₹499",
+    soldOut: true,
+    frontImages: [
+      "/shop/2025-front.jpg",
+      "/shop/2025-front-2.jpg",
+    ],
+    backImages: [
+      "/shop/2025-back.jpg",
+      "/shop/2025-back-2.jpg",
+    ],
+  },
+  {
+    id: 2,
+    price: "₹550",
+    soldOut: true,
+    frontImages: [
+      "/shop/2026-front.png",
+      "/shop/2026-front-2.png",
+    ],
+    backImages: [
+      "/shop/2026-back.png",
+      "/shop/2026-back-2.png",
+    ],
+  },
+];
 
   return (
     <section
@@ -35,7 +63,7 @@ export default function Shop() {
         </p>
 
         {/* Cards */}
-        <div className="mx-auto mt-20 grid w-full max-w-5xl grid-cols-1 justify-items-center gap-10 md:grid-cols-2">
+        <div className="mx-auto mt-20 grid w-full max-w-5xl translate-y-5 grid-cols-1 justify-items-center gap-10 md:grid-cols-2">
 
           {jerseys.map((jersey) => (
 
@@ -48,34 +76,39 @@ export default function Shop() {
               <div className="grid grid-cols-2 gap-4">
 
                 {/* Front */}
-                <div className="flex aspect-[3/4] items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-slate-950/30 transition group-hover:border-sky-300">
-
-                  <div className="text-center">
-
-                    <div className="text-5xl">📷</div>
-
-                    <p className="mt-3 text-sm font-medium text-slate-400">
-                      Front Image
-                    </p>
-
-                  </div>
-
-                </div>
+                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/30">
+  <Image
+    src={jersey.frontImages[frontImage[jersey.id as 1 | 2]]}
+    alt={`Official Jersey ${jersey.id === 1 ? "2025" : "2026"} Front`}
+    fill
+    className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+  />
+  <button
+  onClick={() =>
+    setFrontImage((prev) => ({
+      ...prev,
+      [jersey.id]: prev[jersey.id as 1 | 2] === 0 ? 1 : 0,
+    }))
+  }
+  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/60 px-3 py-2 text-lg text-white transition-all duration-300 hover:bg-sky-500"
+>
+  ❯
+</button>
+</div>
 
                 {/* Back */}
-                <div className="flex aspect-[3/4] items-center justify-center rounded-2xl border-2 border-dashed border-sky-400/20 bg-slate-900/20 transition group-hover:border-sky-300">
-
-                  <div className="text-center">
-
-                    <div className="text-5xl">📷</div>
-
-                    <p className="mt-3 text-sm font-medium text-slate-400">
-                      Back Image
-                    </p>
-
-                  </div>
-
-                </div>
+                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-sky-400/20 bg-slate-900/20">
+  <Image
+    src={
+      jersey.id === 1
+        ? "/shop/2025-back.jpg"
+        : "/shop/2026-back.png"
+    }
+    alt={`Official Jersey ${jersey.id === 1 ? "2025" : "2026"} Back`}
+    fill
+    className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+  />
+</div>
 
               </div>
 
