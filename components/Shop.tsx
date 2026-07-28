@@ -32,11 +32,11 @@ const [backImage, setBackImage] = useState({
     soldOut: true,
     frontImages: [
       "/shop/2026-front.png",
-      "/shop/2026-front-2.png",
+      "/shop/2026-front-2.jpg",
     ],
     backImages: [
       "/shop/2026-back.png",
-      "/shop/2026-back-2.png",
+      "/shop/2026-back-2.jpg",
     ],
   },
 ];
@@ -77,37 +77,66 @@ const [backImage, setBackImage] = useState({
 
                 {/* Front */}
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/30">
-  <Image
-    src={jersey.frontImages[frontImage[jersey.id as 1 | 2]]}
-    alt={`Official Jersey ${jersey.id === 1 ? "2025" : "2026"} Front`}
-    fill
-    className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-  />
+  <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl bg-white">
+  {jersey.frontImages.map((img, index) => (
+    <Image
+      key={index}
+      src={img}
+      alt={`Front View ${index + 1}`}
+      fill
+      unoptimized
+      className={`absolute inset-0 object-contain transition-opacity duration-300 ${
+        frontImage[jersey.id as 1 | 2] === index
+          ? "opacity-100"
+          : "opacity-0"
+      }`}
+    />
+  ))}
+
   <button
-  onClick={() =>
-    setFrontImage((prev) => ({
-      ...prev,
-      [jersey.id]: prev[jersey.id as 1 | 2] === 0 ? 1 : 0,
-    }))
-  }
-  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/60 px-3 py-2 text-lg text-white transition-all duration-300 hover:bg-sky-500"
->
-  ❯
-</button>
+    onClick={() =>
+      setFrontImage((prev) => ({
+        ...prev,
+        [jersey.id]: prev[jersey.id as 1 | 2] === 0 ? 1 : 0,
+      }))
+    }
+    className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-sky-500"
+  >
+   ❯
+  </button>
+</div>
 </div>
 
                 {/* Back */}
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-sky-400/20 bg-slate-900/20">
-  <Image
-    src={
-      jersey.id === 1
-        ? "/shop/2025-back.jpg"
-        : "/shop/2026-back.png"
+ <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl bg-white">
+  {jersey.backImages.map((img, index) => (
+    <Image
+      key={index}
+      src={img}
+      alt={`Back View ${index + 1}`}
+      fill
+      unoptimized
+      className={`absolute inset-0 object-contain transition-opacity duration-300 ${
+        backImage[jersey.id as 1 | 2] === index
+          ? "opacity-100"
+          : "opacity-0"
+      }`}
+    />
+  ))}
+
+  <button
+    onClick={() =>
+      setBackImage((prev) => ({
+        ...prev,
+        [jersey.id]: prev[jersey.id as 1 | 2] === 0 ? 1 : 0,
+      }))
     }
-    alt={`Official Jersey ${jersey.id === 1 ? "2025" : "2026"} Back`}
-    fill
-    className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-  />
+    className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-sky-500"
+  >
+    ❯
+  </button>
+</div>
 </div>
 
               </div>

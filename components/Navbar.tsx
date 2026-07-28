@@ -55,7 +55,7 @@ export default function Navbar() {
           <img
             src="/images/logo.jpg"
             alt="Messians of Bengal"
-            className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-sky-300/60 object-cover shadow-[0_0_8px_rgba(56,189,248,0.25),0_0_18px_rgba(56,189,248,0.2)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_12px_rgba(56,189,248,0.35),0_0_25px_rgba(56,189,248,0.3)]"
+            className="h-10 w-10 translate-x-5 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-sky-300/60 object-cover shadow-[0_0_8px_rgba(56,189,248,0.25),0_0_18px_rgba(56,189,248,0.2)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_12px_rgba(56,189,248,0.35),0_0_25px_rgba(56,189,248,0.3)]"
           />
         </div>
 
