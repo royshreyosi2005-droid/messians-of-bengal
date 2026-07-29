@@ -1,46 +1,29 @@
 "use client";
 import SectionOverlay from "./SectionOverlay";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function Shop() {
-  const [frontImage, setFrontImage] = useState({
-  1: 0,
-  2: 0,
-});
+ const [frontImage, setFrontImage] = useState<Record<string, number>>({});
 
-const [backImage, setBackImage] = useState({
-  1: 0,
-  2: 0,
-});
-  const jerseys = [
-  {
-    id: 1,
-    price: "₹499",
-    soldOut: true,
-    frontImages: [
-      "/shop/2025-front.jpg",
-      "/shop/2025-front-2.jpg",
-    ],
-    backImages: [
-      "/shop/2025-back.jpg",
-      "/shop/2025-back-2.jpg",
-    ],
-  },
-  {
-    id: 2,
-    price: "₹550",
-    soldOut: true,
-    frontImages: [
-      "/shop/2026-front.png",
-      "/shop/2026-front-2.jpg",
-    ],
-    backImages: [
-      "/shop/2026-back.png",
-      "/shop/2026-back-2.jpg",
-    ],
-  },
-];
+const [backImage, setBackImage] = useState<Record<string, number>>({});
+  const [jerseys, setJerseys] = useState<any[]>([]);
 
+  useEffect(() => {
+  const fetchJerseys = async () => {
+    try {
+      const res = await fetch("/api/jersey");
+      const data = await res.json();
+
+      if (data.success) {
+        setJerseys(data.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch jerseys:", error);
+    }
+  };
+
+  fetchJerseys();
+}, []);
   return (
     <section
       id="shop"
@@ -68,7 +51,7 @@ const [backImage, setBackImage] = useState({
           {jerseys.map((jersey) => (
 
             <div
-              key={jersey.id}
+             key={jersey._id}
              className="group w-full max-w-[430px] rounded-3xl border border-white/10 bg-slate-950/35 p-6 text-center backdrop-blur-2xl transition-all duration-500 hover:-translate-y-2 hover:border-sky-400/30 hover:bg-slate-950/45 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]"
             >
 
@@ -78,7 +61,7 @@ const [backImage, setBackImage] = useState({
                 {/* Front */}
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/30">
   <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl bg-white">
-  {jersey.frontImages.map((img, index) => (
+ { jersey.frontImages.map((img: string, index: number) => (
     <Image
       key={index}
       src={img}
@@ -86,7 +69,7 @@ const [backImage, setBackImage] = useState({
       fill
       unoptimized
       className={`absolute inset-0 object-contain transition-opacity duration-300 ${
-        frontImage[jersey.id as 1 | 2] === index
+       (frontImage[jersey._id] ?? 0) === index
           ? "opacity-100"
           : "opacity-0"
       }`}
@@ -96,9 +79,9 @@ const [backImage, setBackImage] = useState({
   <button
     onClick={() =>
       setFrontImage((prev) => ({
-        ...prev,
-        [jersey.id]: prev[jersey.id as 1 | 2] === 0 ? 1 : 0,
-      }))
+  ...prev,
+  [jersey._id]: (prev[jersey._id] ?? 0) === 0 ? 1 : 0,
+}))
     }
     className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-sky-500"
   >
@@ -110,7 +93,7 @@ const [backImage, setBackImage] = useState({
                 {/* Back */}
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-sky-400/20 bg-slate-900/20">
  <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl bg-white">
-  {jersey.backImages.map((img, index) => (
+ { jersey.backImages.map((img: string, index: number) => (
     <Image
       key={index}
       src={img}
@@ -118,7 +101,7 @@ const [backImage, setBackImage] = useState({
       fill
       unoptimized
       className={`absolute inset-0 object-contain transition-opacity duration-300 ${
-        backImage[jersey.id as 1 | 2] === index
+        (backImage[jersey._id] ?? 0) === index
           ? "opacity-100"
           : "opacity-0"
       }`}
@@ -128,9 +111,9 @@ const [backImage, setBackImage] = useState({
   <button
     onClick={() =>
       setBackImage((prev) => ({
-        ...prev,
-        [jersey.id]: prev[jersey.id as 1 | 2] === 0 ? 1 : 0,
-      }))
+  ...prev,
+  [jersey._id]: (prev[jersey._id] ?? 0) === 0 ? 1 : 0,
+}))
     }
     className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-sky-500"
   >
@@ -144,14 +127,14 @@ const [backImage, setBackImage] = useState({
              
               {/* Jersey Name */}
 <div className="mt-7 flex flex-col items-center">
-  <h3 className="text-2xl font-bold tracking-wide text-white">
-    {jersey.id === 1 ? "Official Jersey 2025" : "Official Jersey 2026"}
-  </h3>
+ <h3 className="text-2xl font-bold tracking-wide text-white">
+  {jersey.name}
+</h3>
 </div>
 
               {/* Price */}
               <h3 className="mt-8 text-center text-5xl font-black text-sky-400">
-                {jersey.price}
+                ₹{jersey.price}
               </h3>
 
               {/* Sold Out */}
