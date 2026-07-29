@@ -6,6 +6,7 @@ const [price, setPrice] = useState("");
 const [jerseys, setJerseys] = useState<any[]>([]);
 const [frontFile, setFrontFile] = useState<File | null>(null);
 const fetchJerseys = async () => {
+  
   const res = await fetch("/api/jersey");
   const data = await res.json();
 
@@ -41,7 +42,6 @@ const handleSubmit = async () => {
   alert("Please select a front image.");
   return;
 }
-
 const formData = new FormData();
 formData.append("file", frontFile);
 
@@ -57,6 +57,8 @@ if (!uploadData.success) {
   return;
 }
 
+
+
     const res = await fetch("/api/jersey", {
       method: "POST",
       headers: {
@@ -66,7 +68,7 @@ if (!uploadData.success) {
         name,
         price: Number(price),
         soldOut: false,
-        frontImages: [],
+       frontImages: [uploadData.url],
         backImages: [],
       }),
     });
