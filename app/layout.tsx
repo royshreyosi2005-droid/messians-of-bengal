@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import Script from "next/script";
 import { Montserrat } from "next/font/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 
@@ -49,7 +50,7 @@ openGraph: {
   title: "Messians of Bengal",
   description:
     "One of Bengal's biggest Lionel Messi fan communities. Explore exclusive jerseys, connect with fellow fans, and celebrate football together.",
-  url: "https://messians-of-bengal-k3u25pj4d-shree21.vercel.app",
+  url: "https://messians-of-bengal.vercel.app",
   siteName: "Messians of Bengal",
   images: [
     {
@@ -85,6 +86,21 @@ export default function RootLayout({
   <body>
     <AnimatedBackground />
     {children}
+
+    <Script
+  src="https://www.googletagmanager.com/gtag/js?id=G-3TRG2RNVRB"
+  strategy="afterInteractive"
+/>
+
+<Script id="google-analytics" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-3TRG2RNVRB');
+  `}
+</Script>
   </body>
 </html>
   );
