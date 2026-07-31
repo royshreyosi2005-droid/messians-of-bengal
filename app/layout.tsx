@@ -17,8 +17,34 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Messians of Bengal",
-  description: "Official Fan Club Website",
+  title: {
+    default: "Messians of Bengal",
+    template: "%s | Messians of Bengal",
+  },
+
+  description:
+    "Messians of Bengal is one of Bengal's biggest Lionel Messi fan communities. Join football lovers, explore exclusive jerseys, stay updated with events, and celebrate the passion for football together.",
+
+  keywords: [
+    "Messians of Bengal",
+    "Lionel Messi",
+    "Messi Fan Club",
+    "Football Community",
+    "Football Jerseys",
+    "Messi Jersey",
+    "Bengal Football",
+    "Argentina Fans",
+    "Football Merchandise",
+  ],
+
+  authors: [{ name: "Messians of Bengal" }],
+  creator: "Messians of Bengal",
+  publisher: "Messians of Bengal",
+  icons: {
+  icon: "/images/logo.jpg",
+  shortcut: "/images/logo.jpg",
+  apple: "/images/logo.jpg",
+},
 };
 
 export default function RootLayout({
@@ -27,12 +53,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   <html lang="en" className={plusJakarta.variable}>
-      <body>
-        <AnimatedBackground />
-
-        {children}
-      </body>
-    </html>
+   <html
+  lang="en"
+  className={`${montserrat.variable} ${plusJakarta.variable}`}
+>
+  <body>
+    <AnimatedBackground />
+    {children}
+  </body>
+</html>
   );
 }
