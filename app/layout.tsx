@@ -45,6 +45,31 @@ export const metadata: Metadata = {
   shortcut: "/images/logo.jpg",
   apple: "/images/logo.jpg",
 },
+openGraph: {
+  title: "Messians of Bengal",
+  description:
+    "One of Bengal's biggest Lionel Messi fan communities. Explore exclusive jerseys, connect with fellow fans, and celebrate football together.",
+  url: "https://messians-of-bengal-k3u25pj4d-shree21.vercel.app",
+  siteName: "Messians of Bengal",
+  images: [
+    {
+      url: "/images/messi-collage.jpg",
+      width: 1200,
+      height: 630,
+      alt: "Messians of Bengal",
+    },
+  ],
+  locale: "en_US",
+  type: "website",
+},
+
+twitter: {
+  card: "summary_large_image",
+  title: "Messians of Bengal",
+  description:
+    "One of Bengal's biggest Lionel Messi fan communities.",
+  images: ["/images/messi-collage.jpg"],
+},
 };
 
 export default function RootLayout({
