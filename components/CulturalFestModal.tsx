@@ -136,7 +136,7 @@ export default function CulturalFestModal({
 
             <div className="mt-4 flex justify-center">
   <p className="max-w-3xl text-center text-lg leading-8 text-slate-400">
-    Beyond classrooms, we created memories that will stay forever.
+    Beyond places, we created memories that will stay forever.
   </p>
 </div>
             <div className="mt-10 flex w-full justify-center">

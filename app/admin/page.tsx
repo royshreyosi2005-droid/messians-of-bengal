@@ -5,8 +5,28 @@ export default function AdminPage() {
 const [price, setPrice] = useState("");
 const [jerseys, setJerseys] = useState<any[]>([]);
 const [frontFile, setFrontFile] = useState<File | null>(null);
+const [backFile, setBackFile] = useState<File | null>(null);
+const [editingId, setEditingId] = useState<string | null>(null);
 const fetchJerseys = async () => {
   
+  if (editingId) {
+  const res = await fetch(`/api/jersey/${editingId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      price: Number(price),
+    }),
+  });
+
+  const data = await res.json();
+
+  
+
+  return;
+}
   const res = await fetch("/api/jersey");
   const data = await res.json();
 
@@ -38,12 +58,41 @@ const handleDelete = async (id: string) => {
 };
 const handleSubmit = async () => {
   try {
-    if (!frontFile) {
+    if (!frontFile  && !editingId ) {
   alert("Please select a front image.");
   return;
 }
+if (editingId) {
+  const res = await fetch(`/api/jersey/${editingId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      price: Number(price),
+    }),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Jersey updated successfully!");
+    fetchJerseys();
+    setEditingId(null);
+    setName("");
+    setPrice("");
+    return;
+  }
+}
+if (!backFile && !editingId) {
+  alert("Please select a back image.");
+  return;
+}
 const formData = new FormData();
-formData.append("file", frontFile);
+const backFormData = new FormData();
+backFormData.append("file", backFile!);
+formData.append("file", frontFile!);
 
 const uploadRes = await fetch("/api/upload", {
   method: "POST",
@@ -51,6 +100,17 @@ const uploadRes = await fetch("/api/upload", {
 });
 
 const uploadData = await uploadRes.json();
+const backUploadRes = await fetch("/api/upload", {
+  method: "POST",
+  body: backFormData,
+});
+
+const backUploadData = await backUploadRes.json();
+
+if (!backUploadData.success) {
+  alert("Back image upload failed!");
+  return;
+}
 
 if (!uploadData.success) {
   alert("Image upload failed!");
@@ -69,7 +129,7 @@ if (!uploadData.success) {
         price: Number(price),
         soldOut: false,
        frontImages: [uploadData.url],
-        backImages: [],
+       backImages: [backUploadData.url],
       }),
     });
 
@@ -119,7 +179,7 @@ if (!uploadData.success) {
 </div>
 
          <div className="space-y-2">
-  <label className="font-medium">Front Image</label>
+ <label className="mb-2 block font-medium">Front Image</label>
 
   <input
     type="file"
@@ -127,6 +187,20 @@ if (!uploadData.success) {
     onChange={(e) =>
       setFrontFile(e.target.files ? e.target.files[0] : null)
     }
+    className="w-full rounded border p-2"
+  />
+</div>
+
+<div>
+  <label className="mb-2 block font-medium">Back Image</label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setBackFile(e.target.files ? e.target.files[0] : null)
+    }
+    className="w-full rounded border p-2"
   />
 </div>
 
@@ -148,6 +222,16 @@ if (!uploadData.success) {
         <p className="font-semibold">{jersey.name}</p>
         <p>₹{jersey.price}</p>
       </div>
+      <button
+  onClick={() => {
+  setEditingId(jersey._id);
+  setName(jersey.name);
+  setPrice(jersey.price.toString());
+}}
+  className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+>
+  Edit
+</button>
 
       <button
   onClick={() => handleDelete(jersey._id)}
