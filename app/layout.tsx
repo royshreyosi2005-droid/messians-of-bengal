@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import { Plus_Jakarta_Sans } from "next/font/google";
+
 import "./globals.css";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import { Montserrat } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],

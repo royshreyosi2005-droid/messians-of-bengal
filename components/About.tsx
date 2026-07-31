@@ -15,7 +15,7 @@ export default function About() {
         </p>
 
         {/* Heading */}
-        <h2 className="text-5xl font-black uppercase leading-tight text-white md:text-6xl xl:text-7xl">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">
           UNITED BY MESSI
           <br />
           UNITED BY PASSION

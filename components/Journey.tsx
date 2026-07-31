@@ -22,7 +22,7 @@ export default function Journey() {
           JOURNEY
         </p>
 
-        <h2 className="text-5xl font-black uppercase leading-none text-white md:text-6xl xl:text-7xl">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">
           FROM PASSION
           <br />
           TO A FAMILY

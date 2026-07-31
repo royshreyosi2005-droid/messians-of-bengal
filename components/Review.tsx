@@ -49,7 +49,7 @@ export default function Reviews() {
           REVIEWS
         </p>
 
-        <h2 className="mt-4 text-center text-4xl font-black uppercase text-white md:text-6xl">
+        <h2 className="mx-auto text-center text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">
           SHARE YOUR EXPERIENCE
         </h2>
 

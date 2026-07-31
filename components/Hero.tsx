@@ -10,14 +10,15 @@ export default function Hero() {
           Official Fan Community
         </p>
 
-        <h1 className="text-5xl font-black uppercase leading-tight text-white md:text-7xl lg:text-8xl">
-          MESSIANS OF BENGAL
-        </h1>
+       <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-none text-white">
+  MESSIANS OF BENGAL
+</h1>
 
-        <p className="mt-8 max-w-4xl text-lg leading-8 text-slate-300 md:text-2xl">
-          Bengal's Largest Messi Fan Community • Football • Brotherhood •
-          Events • Exclusive Merchandise
-        </p>
+       <p className="mx-auto max-w-3xl text-center text-lg leading-relaxed text-gray-300 md:text-xl">
+  Bengal's Largest Messi Fan Community
+  <br />
+  Football • Brotherhood • Events • Exclusive Merchandise
+</p>
 
         {/* Divider */}
         <div className="mt-10 h-px w-40 bg-gradient-to-r from-transparent via-sky-400 to-transparent" />

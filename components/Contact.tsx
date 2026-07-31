@@ -19,7 +19,7 @@ export default function Contact() {
     CONTACT
   </p>
 
-  <h2 className="mt-3 text-5xl md:text-7xl font-extrabold text-white">
+  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">
     GET IN TOUCH
   </h2>
 

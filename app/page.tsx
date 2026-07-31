@@ -3,7 +3,6 @@
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
-
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -18,8 +17,8 @@ export default function Home() {
 
 useEffect(() => {
   const timer = setTimeout(() => {
-    setLoading(false);
-  }, 2500);
+  setLoading(false);
+}, 800);
 
   return () => clearTimeout(timer);
 }, []);
