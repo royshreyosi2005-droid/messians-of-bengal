@@ -117,7 +117,7 @@ export default function Reviews() {
 
   <button
     type="submit"
-    className="flex h-10 w-10 items-center translate-y-1 justify-center rounded-full bg-sky-500 text-white transition hover:scale-110 hover:bg-sky-400"
+    className="pointer-events-auto flex h-10 w-10 items-center translate-y-1 justify-center rounded-full bg-sky-500 text-white transition hover:scale-110 hover:bg-sky-400"
   >
     ➤    
   </button>
