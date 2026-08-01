@@ -60,7 +60,7 @@ const [backImage, setBackImage] = useState<Record<string, number>>({});
 
                 {/* Front */}
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-slate-950/30">
-  <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl bg-white">
+  <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl">
  { jersey.frontImages.map((img: string, index: number) => (
     <Image
       key={index}
@@ -92,7 +92,7 @@ const [backImage, setBackImage] = useState<Record<string, number>>({});
 
                 {/* Back */}
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-sky-400/20 bg-slate-900/20">
- <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl bg-white">
+ <div className="relative h-64 translate-y-2 overflow-hidden rounded-xl">
  { jersey.backImages.map((img: string, index: number) => (
     <Image
       key={index}
