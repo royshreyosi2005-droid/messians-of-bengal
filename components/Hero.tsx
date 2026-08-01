@@ -15,7 +15,7 @@ export default function Hero() {
 </h1>
 
        <p className="mx-auto max-w-3xl text-center text-lg leading-relaxed text-gray-300 md:text-xl">
-  Bengal's Largest Messi Fan Community
+  Bengal's One of The Largest Messi Fanbase
   <br />
   Football • Brotherhood • Events • Exclusive Merchandise
 </p>

@@ -30,12 +30,12 @@ export default function Journey() {
 
         {/* Description */}
         <p className="mx-auto mt-8 max-w-4xl text-center text-xl leading-9 text-slate-300">
-          Founded in <span className="font-bold text-white">2022</span>,
+          Founded in <span className="font-bold text-white">2021</span>,
           Messians of Bengal started with a simple dream—to unite every Lionel
           Messi fan across Bengal under one family. What began as a small
-          community has grown into a passionate movement, celebrating victories,
+          group has grown into a passionate community, celebrating victories,
           creating unforgettable memories, and building lifelong friendships. In{" "}
-          <span className="font-bold text-white">2025</span>, we proudly
+          <span className="font-bold text-white">2022/23</span>, we proudly
           launched our first official jersey, marking an exciting new chapter in
           our journey. And this is only the beginning.
         </p>

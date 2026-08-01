@@ -25,7 +25,7 @@ export default function About() {
         <p className="mx-auto mt-10 max-w-4xl text-xl leading-10 text-slate-300">
           Messians of Bengal is Bengal's Largest Messi Fan Community,
           bringing together passionate supporters from across the state.
-          Since 2022, we've celebrated every goal, every trophy and every
+          Since 2021, we've celebrated every goal, every trophy and every
           unforgettable moment through watch parties, football meetups,
           community events and fan gatherings.
         </p>
@@ -38,12 +38,12 @@ export default function About() {
         {/* Divider */}
         {/* <div className="mx-auto mt-10 h-px w-40 bg-gradient-to-r from-transparent via-sky-400 to-transparent" /> */}
         {/* Stats */}
-        <div className="mt-16 grid grid-cols-1 gap-6 translate-y-5 md:grid-cols-3">
+        <div className="mt-16 grid grid-cols-2 gap-6 translate-y-5 md:grid-cols-4">
 
           {/* Founded */}
           <div className="group overflow-hidden rounded-3xl border border-white/10 bg-slate-950/45 p-8 backdrop-blur-lg transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/30 hover:bg-slate-950/55 hover:shadow-[0_0_25px_rgba(56,189,248,0.12)]">
             <h3 className="text-5xl font-black text-sky-400">
-              2022
+              2021
             </h3>
 
             <p className="mt-3 text-lg font-medium text-slate-200">
@@ -54,7 +54,7 @@ export default function About() {
           {/* Members */}
           <div className="group overflow-hidden rounded-3xl border border-white/10 bg-slate-950/45 p-8 backdrop-blur-lg transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/30 hover:bg-slate-950/55 hover:shadow-[0_0_25px_rgba(56,189,248,0.12)]">
             <h3 className="text-5xl font-black text-sky-400">
-              500+
+              600+
             </h3>
 
             <p className="mt-3 text-lg font-medium text-slate-200">
@@ -73,6 +73,16 @@ export default function About() {
             </p>
           </div>
 
+ {/* Followers */}
+          <div className="group overflow-hidden rounded-3xl border border-white/10 bg-slate-950/45 p-8 backdrop-blur-lg transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/30 hover:bg-slate-950/55 hover:shadow-[0_0_25px_rgba(56,189,248,0.12)]">
+            <h3 className="text-5xl font-black text-sky-400">
+              5K+
+            </h3>
+
+            <p className="mt-3 text-lg font-medium text-slate-200">
+              Instagram Followers
+            </p>
+          </div>
         </div>
 
       </div>
