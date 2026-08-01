@@ -54,7 +54,7 @@ export default function Reviews() {
         </h2>
 
         <p className="mt-6 max-w-2xl text-center text-lg leading-8 text-slate-300">
-          We'd love to hear what you think about Messians of Bengal.
+         Share your experience with Messians of Bengal or review your jersey. Your feedback helps us grow stronger as a community.
         </p>
 
         {/* Form */}
@@ -93,20 +93,38 @@ export default function Reviews() {
     </button>
   ))}
 </div>
+<div className="relative">
           <textarea
-            rows={5}
+            rows={2}
             placeholder="Write your review..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="resize-none rounded-xl border border-white/10 bg-slate-950/30 px-5 py-4 text-center text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400"
+            onInput={(e) => {
+  e.currentTarget.style.height = "auto";
+  e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+}}
+
+            className="w-full resize-none overflow-hidden rounded-xl border border-white/10 bg-slate-950/30 px-5 pt-4 pb-14 text-center text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400"
           />
 
-          <button
-            type="submit"
-            className="rounded-xl border border-sky-400/40 bg-sky-400/10 py-4 text-lg font-bold text-sky-300 transition duration-300 hover:bg-sky-400/20 hover:text-white"
-          >
-            Submit Review
-          </button>
+          <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex items-center justify-between">
+  <button
+    type="button"
+    className="pointer-events-auto flex h-10 w-10 items-center translate-y-1 justify-center rounded-full border border-white/10 bg-slate-900/60 text-2xl text-slate-300 transition hover:border-sky-400 hover:text-sky-400"
+  >
+    +
+  </button>
+
+  <button
+    type="submit"
+    className="flex h-10 w-10 items-center translate-y-1 justify-center rounded-full bg-sky-500 text-white transition hover:scale-110 hover:bg-sky-400"
+  >
+    ➤    
+  </button>
+</div>
+          </div>
+
+         
         </form>
 
         {/* Latest Reviews */}
@@ -119,7 +137,7 @@ export default function Reviews() {
 
           {reviews.length === 0 ? (
 
-           <div className="mt-8 flex w-full max-w-3xl flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950/35 p-12 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]">
+           <div className="mt-8 flex w-full max-w-3xl translate-y-3 flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950/35 p-12 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]">
 
               <div className="text-5xl">⭐</div>
 
