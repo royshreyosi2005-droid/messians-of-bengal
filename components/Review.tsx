@@ -17,9 +17,14 @@ export default function Reviews() {
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
+
+  if (submitting) return;
+
+setSubmitting(true);
 
 const fetchReviews = async () => {
 useEffect(() => {
@@ -59,21 +64,25 @@ useEffect(() => {
   const data = await res.json();
 
   if (!data.success) {
-    alert("Failed to submit review.");
-    return;
-  }
+  setSubmitting(false);
+  alert("Failed to submit review.");
+  return;
+}
 
   
 
   setName("");
   setRating(0);
   setMessage("");
+  if (textAreaRef.current) {
+  textAreaRef.current.style.height = "44px";
+}
   setSelectedImages([]);
 
   if (fileInputRef.current) {
     fileInputRef.current.value = "";
   }
-
+setSubmitting(false);
   alert("Review submitted successfully!");
 };
 const fetchReviews = async () => {
@@ -92,6 +101,7 @@ useEffect(() => {
   fetchReviews();
 }, []);
 const fileInputRef = useRef<HTMLInputElement>(null);
+const textAreaRef = useRef<HTMLTextAreaElement>(null);
   return (
     <section
       id="reviews"
@@ -206,7 +216,7 @@ const fileInputRef = useRef<HTMLInputElement>(null);
 
  
 
- <div className="flex items-end gap-3 px-5 pb-5">
+ <div className="flex items-end gap-3 px-5 pb-5 overflow-hidden">
 
     <button
       type="button"
@@ -217,6 +227,7 @@ const fileInputRef = useRef<HTMLInputElement>(null);
     </button>
 
 <textarea
+ref={textAreaRef}
   rows={1}
   placeholder="Write your review..."
   value={message}
@@ -225,15 +236,20 @@ const fileInputRef = useRef<HTMLInputElement>(null);
     e.currentTarget.style.height = "auto";
     e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
   }}
-  className="min-h-[44px] flex-1 translate-y-2.5 translate-x-2 resize-none overflow-hidden bg-transparent py-2 text-white placeholder:text-slate-500 outline-none"
+  className="min-h-[44px] max-h-40 flex-1 resize-none overflow-y-auto bg-transparent py-2 text-white placeholder:text-slate-500 outline-none"
 />
 
     <button
-      type="submit"
-      className="flex h-10 w-10 items-center justify-center -translate-x-2 translate-y-0.001 rounded-full bg-sky-500 text-white transition hover:scale-110 hover:bg-sky-400"
-    >
-     ➤
-    </button>
+  type="submit"
+  disabled={submitting}
+  className={`flex h-10 w-10 items-center justify-center -translate-x-2 translate-y-0.001 rounded-full text-white transition ${
+    submitting
+      ? "cursor-not-allowed bg-slate-600"
+      : "bg-sky-500 hover:scale-110 hover:bg-sky-400"
+  }`}
+>
+  {submitting ? "..." : "➤"}
+</button>
 
   </div>
 
