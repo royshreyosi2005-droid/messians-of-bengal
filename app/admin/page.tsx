@@ -4,11 +4,13 @@ export default function AdminPage() {
     const [name, setName] = useState("");
 const [price, setPrice] = useState("");
 const [jerseys, setJerseys] = useState<any[]>([]);
+const [reviews, setReviews] = useState<any[]>([]);
 const [frontFile, setFrontFile] = useState<File | null>(null);
 const [backFile, setBackFile] = useState<File | null>(null);
 const [editingId, setEditingId] = useState<string | null>(null);
 const fetchJerseys = async () => {
   
+
   if (editingId) {
   const res = await fetch(`/api/jersey/${editingId}`, {
     method: "PUT",
@@ -35,8 +37,18 @@ const fetchJerseys = async () => {
   }
 };
 
+const fetchReviews = async () => {
+  const res = await fetch("/api/reviews");
+  const data = await res.json();
+
+  if (data.success) {
+    setReviews(data.reviews);
+  }
+};
+
 useEffect(() => {
   fetchJerseys();
+  fetchReviews();
 }, []);
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Are you sure you want to delete this jersey?");
@@ -242,6 +254,48 @@ if (!uploadData.success) {
     </div>
   ))}
 </div>
+
+<div className="mt-10 space-y-4">
+  <h2 className="text-xl font-bold">All Reviews</h2>
+
+  {reviews.map((review: any) => (
+    <div
+      key={review._id}
+      className="flex items-center justify-between rounded-lg border p-4"
+    >
+      <div>
+        <p className="font-semibold">{review.name}</p>
+        <p>{review.message}</p>
+        <p>⭐ {review.rating}</p>
+      </div>
+
+      <button
+        onClick={async () => {
+          const ok = confirm("Delete this review?");
+
+          if (!ok) return;
+
+          const res = await fetch(`/api/reviews/${review._id}`, {
+            method: "DELETE",
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            alert("Review deleted!");
+            fetchReviews();
+          } else {
+            alert("Delete failed!");
+          }
+        }}
+        className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+      >
+        Delete
+      </button>
+    </div>
+  ))}
+</div>
+
 
         </div>
       </div>
