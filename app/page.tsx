@@ -14,33 +14,43 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-  setLoading(false);
-}, 1000);
+  useEffect(() => {
+    setMounted(true);
 
-  return () => clearTimeout(timer);
-}, []);
+    if (sessionStorage.getItem("visited")) {
+      setLoading(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      sessionStorage.setItem("visited", "true");
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-  <>
-    <AnimatePresence mode="wait">
-      {loading && <LoadingScreen key="loader" />}
-    </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait">
+        {loading && <LoadingScreen key="loader" />}
+      </AnimatePresence>
 
-    {!loading && (
-      <>
-        
-        <Navbar />
-        <Hero />
-        <About />
-        <Journey />
-        <Shop />
-        <Reviews />
-        <Contact />
-        
-      </>
-    )}
-  </>
-);
+      {!loading && (
+        <>
+          <Navbar />
+          <Hero />
+          <About />
+          <Journey />
+          <Shop />
+          <Reviews />
+          <Contact />
+        </>
+      )}
+    </>
+  );
 }

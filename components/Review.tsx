@@ -1,12 +1,13 @@
 "use client";
 import { Star } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionOverlay from "./SectionOverlay";
-
+import Link from "next/link";
 type Review = {
   name: string;
   rating: number;
   message: string;
+  images: string[];
 };
 
 export default function Reviews() {
@@ -15,25 +16,82 @@ export default function Reviews() {
   const [message, setMessage] = useState("");
 
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!name.trim() || !message.trim() || rating === 0) return;
+const fetchReviews = async () => {
+useEffect(() => {
+  fetchReviews();
+}, []);
 
-    const newReview: Review = {
-      name,
-      rating,
-      message,
-    };
+  try {
+    const res = await fetch("/api/reviews");
 
-    setReviews((prev) => [newReview, ...prev]);
+    const data = await res.json();
 
-    setName("");
-    setRating(0);
-    setMessage("");
-  };
+    if (data.success) {
+      setReviews(data.reviews);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+  if (!name.trim() || !message.trim() || rating === 0) return;
+
+  const formData = new FormData();
+
+  formData.append("name", name);
+  formData.append("rating", rating.toString());
+  formData.append("message", message);
+
+  selectedImages.forEach((image) => {
+    formData.append("images", image);
+  });
+
+  const res = await fetch("/api/reviews", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("Failed to submit review.");
+    return;
+  }
+
+  
+
+  setName("");
+  setRating(0);
+  setMessage("");
+  setSelectedImages([]);
+
+  if (fileInputRef.current) {
+    fileInputRef.current.value = "";
+  }
+
+  alert("Review submitted successfully!");
+};
+const fetchReviews = async () => {
+  try {
+    const res = await fetch("/api/reviews");
+    const data = await res.json();
+
+    if (data.success) {
+      setReviews(data.reviews);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+useEffect(() => {
+  fetchReviews();
+}, []);
+const fileInputRef = useRef<HTMLInputElement>(null);
   return (
     <section
       id="reviews"
@@ -41,7 +99,7 @@ export default function Reviews() {
     >
       <SectionOverlay />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center">
+      <div className="relative z-10 mx-auto -translate-y-4 flex w-full max-w-6xl flex-col items-center">
 
         {/* Heading */}
 
@@ -93,43 +151,101 @@ export default function Reviews() {
     </button>
   ))}
 </div>
-<div className="relative">
-          <textarea
-            rows={2}
-            placeholder="Write your review..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onInput={(e) => {
-  e.currentTarget.style.height = "auto";
-  e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
-}}
+<div className="relative rounded-2xl border border-white/10 bg-slate-950/30 transition focus-within:border-sky-400">
 
-            className="w-full resize-none overflow-hidden rounded-xl border border-white/10 bg-slate-950/30 px-5 pt-4 pb-14 text-center text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400"
+  <input
+    type="file"
+    accept="image/*"
+    multiple
+    ref={fileInputRef}
+    className="hidden"
+    onChange={(e) => {
+      if (!e.target.files) return;
+
+      const files = Array.from(e.target.files);
+
+      setSelectedImages((prev) => {
+        const updated = [...prev, ...files].slice(0, 5);
+        return updated;
+      });
+
+      e.target.value = "";
+    }}
+  />
+
+  {selectedImages.length > 0 && (
+    <div className="flex flex-wrap gap-3 border-b border-white/10 px-5 pt-5 pb-4">
+
+      {selectedImages.map((image, index) => (
+
+        <div key={index} className="relative">
+
+          <img
+            src={URL.createObjectURL(image)}
+            alt=""
+            className="h-14 w-14 translate-x-2 rounded-xl object-cover"
           />
 
-          <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex items-center justify-between">
-  <button
-    type="button"
-    className="pointer-events-auto flex h-10 w-10 items-center translate-y-1 justify-center rounded-full border border-white/10 bg-slate-900/60 text-2xl text-slate-300 transition hover:border-sky-400 hover:text-sky-400"
-  >
-    +
-  </button>
+          <button
+            type="button"
+            onClick={() =>
+              setSelectedImages((prev) =>
+                prev.filter((_, i) => i !== index)
+              )
+            }
+            className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[11px] font-bold text-white"
+          >
+            ×
+          </button>
 
-  <button
-    type="submit"
-    className="pointer-events-auto flex h-10 w-10 items-center translate-y-1 justify-center rounded-full bg-sky-500 text-white transition hover:scale-110 hover:bg-sky-400"
-  >
-    ➤    
-  </button>
+        </div>
+
+      ))}
+
+    </div>
+  )}
+
+ 
+
+ <div className="flex items-end gap-3 px-5 pb-5">
+
+    <button
+      type="button"
+      onClick={() => fileInputRef.current?.click()}
+      className="flex h-10 w-10 items-center justify-center translate-x-2 translate-y-0.0005 rounded-full border border-white/10 bg-slate-900 text-2xl text-slate-300 transition hover:border-sky-400 hover:text-sky-400"
+    >
+      +
+    </button>
+
+<textarea
+  rows={1}
+  placeholder="Write your review..."
+  value={message}
+  onChange={(e) => setMessage(e.target.value)}
+  onInput={(e) => {
+    e.currentTarget.style.height = "auto";
+    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+  }}
+  className="min-h-[44px] flex-1 translate-y-2.5 translate-x-2 resize-none overflow-hidden bg-transparent py-2 text-white placeholder:text-slate-500 outline-none"
+/>
+
+    <button
+      type="submit"
+      className="flex h-10 w-10 items-center justify-center -translate-x-2 translate-y-0.001 rounded-full bg-sky-500 text-white transition hover:scale-110 hover:bg-sky-400"
+    >
+     ➤
+    </button>
+
+  </div>
+
 </div>
-          </div>
 
          
         </form>
 
         {/* Latest Reviews */}
 
-        <div className="mt-20 flex w-full translate-y-4 flex-col items-center">
+        <div id="latest-reviews" className="mt-20 flex w-full translate-y-2 flex-col items-center">
 
           <h3 className="text-center text-3xl font-black  uppercase text-white">
             Latest Reviews
@@ -167,7 +283,7 @@ export default function Reviews() {
 
                 <div
                   key={index}
-                  className="w-full rounded-3xl border border-white/10 bg-slate-950/35 p-8 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]"
+                  className="w-full rounded-3xl -translate-y-1.5 border border-white/10 bg-slate-950/35 p-8 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]"
                 >
 
                   <div className="mb-4 flex justify-center text-2xl">
@@ -175,6 +291,19 @@ export default function Reviews() {
                       <span key={i}>⭐</span>
                     ))}
                   </div>
+
+              {review.images?.length > 0 && (
+  <div className="mb-5 flex flex-wrap justify-center gap-2">
+    {review.images.map((image, i) => (
+      <img
+        key={i}
+        src={image}
+        alt={`Review ${i + 1}`}
+        className="h-20 w-20 rounded-xl object-cover border border-white/10"
+      />
+    ))}
+  </div>
+)}
 
                   <p className="text-lg italic leading-8 text-slate-200">
                     "{review.message}"
@@ -191,6 +320,15 @@ export default function Reviews() {
             </div>
 
           )}
+
+          {reviews.length > 3 && (
+  <Link
+  href="/reviews"
+    className="mt-10 h-6 w-55 translate-y-3 text-center rounded-full border border-sky-400/30 bg-sky-400/10 text-sm font-semibold uppercase tracking-wider text-sky-300 transition hover:bg-sky-400 hover:text-white"
+  >
+    View All Reviews →
+  </Link>
+)}
 
         </div>
 
