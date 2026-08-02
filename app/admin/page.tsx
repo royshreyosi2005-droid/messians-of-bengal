@@ -190,6 +190,21 @@ if (!authorized) {
           Admin Dashboard
         </h1>
 
+
+<button
+  onClick={async () => {
+    await fetch("/api/admin/logout", {
+      method: "POST",
+    });
+
+    router.replace("/admin/login");
+  }}
+  className="mb-6 rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+>
+  Logout
+</button>
+
+
         <div className="space-y-5">
             <label className="font-medium">Jersey Name</label>
 
