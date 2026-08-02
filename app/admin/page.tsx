@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 export default function AdminPage() {
+  const router = useRouter();
     const [name, setName] = useState("");
 const [price, setPrice] = useState("");
 const [jerseys, setJerseys] = useState<any[]>([]);
@@ -9,7 +11,16 @@ const [frontFile, setFrontFile] = useState<File | null>(null);
 const [backFile, setBackFile] = useState<File | null>(null);
 const [editingId, setEditingId] = useState<string | null>(null);
 const fetchJerseys = async () => {
-  
+
+  if (typeof window !== "undefined") {
+  fetch("/api/admin/check")
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.isAdmin) {
+        window.location.href = "/admin/login";
+      }
+    });
+}
 
   if (editingId) {
   const res = await fetch(`/api/jersey/${editingId}`, {
@@ -47,9 +58,17 @@ const fetchReviews = async () => {
 };
 
 useEffect(() => {
-  fetchJerseys();
-  fetchReviews();
-}, []);
+  fetch("/api/admin/check")
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.isAdmin) {
+        router.replace("/admin/login");
+      } else {
+        fetchJerseys();
+        fetchReviews();
+      }
+    });
+}, [router]);
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Are you sure you want to delete this jersey?");
 
