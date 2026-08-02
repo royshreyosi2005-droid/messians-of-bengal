@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 export default function AdminPage() {
+  const [authorized, setAuthorized] = useState(false);
   const router = useRouter();
     const [name, setName] = useState("");
 const [price, setPrice] = useState("");
@@ -12,15 +13,7 @@ const [backFile, setBackFile] = useState<File | null>(null);
 const [editingId, setEditingId] = useState<string | null>(null);
 const fetchJerseys = async () => {
 
-  if (typeof window !== "undefined") {
-  fetch("/api/admin/check")
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.isAdmin) {
-        window.location.href = "/admin/login";
-      }
-    });
-}
+ 
 
   if (editingId) {
   const res = await fetch(`/api/jersey/${editingId}`, {
@@ -58,16 +51,21 @@ const fetchReviews = async () => {
 };
 
 useEffect(() => {
-  fetch("/api/admin/check")
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.isAdmin) {
-        router.replace("/admin/login");
-      } else {
-        fetchJerseys();
-        fetchReviews();
-      }
-    });
+  const checkAdmin = async () => {
+    const res = await fetch("/api/admin/check");
+    const data = await res.json();
+
+    if (!data.isAdmin) {
+      router.replace("/admin/login");
+      return;
+    }
+
+    setAuthorized(true);
+    fetchJerseys();
+    fetchReviews();
+  };
+
+  checkAdmin();
 }, [router]);
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Are you sure you want to delete this jersey?");
@@ -179,6 +177,11 @@ if (!uploadData.success) {
     alert("Something went wrong!");
   }
 };
+
+if (!authorized) {
+  return null;
+}
+
   return (
     <main className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
       <div className="w-full max-w-xl rounded-2xl border border-slate-700 bg-slate-900 p-8">
