@@ -3,11 +3,21 @@ import connectDB from "@/lib/mongodb";
 import Review from "@/models/Review";
 
 export async function DELETE(
-  req: NextRequest,
+  Request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
 console.log("DELETE ROUTE HIT");
+const cookie = Request.cookies.get("admin-auth");
 
+if (cookie?.value !== "true") {
+  return NextResponse.json(
+    {
+      success: false,
+      message: "Unauthorized",
+    },
+    { status: 401 }
+  );
+}
   try {
     await connectDB();
 

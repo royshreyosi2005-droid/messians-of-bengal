@@ -160,17 +160,16 @@ const fileInputRef = useRef<HTMLInputElement>(null);
     ref={fileInputRef}
     className="hidden"
     onChange={(e) => {
-      if (!e.target.files) return;
+  const files = Array.from(e.target.files || []);
 
-      const files = Array.from(e.target.files);
+  if (files.length > 4) {
+    alert("Maximum 4 images allowed.");
+    e.target.value = "";
+    return;
+  }
 
-      setSelectedImages((prev) => {
-        const updated = [...prev, ...files].slice(0, 5);
-        return updated;
-      });
-
-      e.target.value = "";
-    }}
+  setSelectedImages(files);
+}}
   />
 
   {selectedImages.length > 0 && (

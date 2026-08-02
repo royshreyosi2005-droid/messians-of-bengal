@@ -17,6 +17,30 @@ export async function POST(req: Request) {
 
     const imageFiles = formData.getAll("images") as File[];
 
+if (imageFiles.length > 4) {
+  return NextResponse.json(
+    {
+      success: false,
+      message: "You can upload a maximum of 4 images.",
+    },
+    { status: 400 }
+  );
+}
+
+    const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+
+for (const file of imageFiles) {
+  if (file.size > MAX_SIZE) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Each image must be smaller than 5 MB.",
+      },
+      { status: 400 }
+    );
+  }
+}
+
     if (!name || !message || !rating) {
       return NextResponse.json(
         {
