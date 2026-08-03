@@ -26,23 +26,6 @@ export default function Reviews() {
 
 setSubmitting(true);
 
-const fetchReviews = async () => {
-useEffect(() => {
-  fetchReviews();
-}, []);
-
-  try {
-    const res = await fetch("/api/reviews");
-
-    const data = await res.json();
-
-    if (data.success) {
-      setReviews(data.reviews);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
 
   if (!name.trim() || !message.trim() || rating === 0) return;
 
@@ -83,12 +66,14 @@ useEffect(() => {
     fileInputRef.current.value = "";
   }
 setSubmitting(false);
+await fetchReviews();
   alert("Review submitted successfully!");
 };
 const fetchReviews = async () => {
   try {
     const res = await fetch("/api/reviews");
     const data = await res.json();
+    
 
     if (data.success) {
       setReviews(data.reviews);
@@ -97,9 +82,13 @@ const fetchReviews = async () => {
     console.error(error);
   }
 };
+
+
 useEffect(() => {
   fetchReviews();
 }, []);
+
+
 const fileInputRef = useRef<HTMLInputElement>(null);
 const textAreaRef = useRef<HTMLTextAreaElement>(null);
   return (
