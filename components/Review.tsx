@@ -16,6 +16,7 @@ export default function Reviews() {
   const [message, setMessage] = useState("");
 
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
 
@@ -80,7 +81,9 @@ const fetchReviews = async () => {
     }
   } catch (error) {
     console.error(error);
-  }
+  } finally {
+  setLoadingReviews(false);
+}
 };
 
 
@@ -255,7 +258,7 @@ ref={textAreaRef}
             Latest Reviews
           </h3>
 
-          {reviews.length === 0 ? (
+          {loadingReviews ? null : reviews.length === 0 ? (
 
            <div className="mt-8 flex w-full max-w-3xl translate-y-3 flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950/35 p-12 text-center backdrop-blur-2xl transition duration-300 hover:border-sky-400/30 hover:shadow-[0_0_35px_rgba(56,189,248,0.15)]">
 
