@@ -59,9 +59,18 @@ for (const file of imageFiles) {
 
       const result: any = await new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
-          {
-            folder: "messians-of-bengal/reviews",
-          },
+  {
+    folder: "messians-of-bengal/reviews",
+
+    transformation: [
+      {
+        width: 1200,
+        crop: "limit",
+        quality: "auto",
+        fetch_format: "auto",
+      },
+    ],
+  },
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
