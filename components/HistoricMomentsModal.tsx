@@ -67,13 +67,19 @@ export default function HistoricMomentsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
-     <div className="relative w-[95%] max-w-7xl min-h-[700px] rounded-3xl bg-[#08111f] p-10">
+     
+<div className="relative h-[90vh] w-[95%] max-w-7xl rounded-3xl bg-[#08111f]">
+
  <button
   onClick={onClose}
-  className="absolute -right-25 -top-2 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-cyan-400/30 bg-[#07111f]/90 text-xl text-white shadow-[0_0_20px_rgba(34,211,238,0.25)] backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:border-cyan-300 hover:bg-cyan-500/20"
+  className="absolute right-3 top-3 z-[999] flex h-12 w-12 items-center justify-center rounded-full border border-cyan-400/30 bg-[#07111f]/95 text-xl text-white shadow-[0_0_20px_rgba(34,211,238,0.25)] backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:border-cyan-300 hover:bg-cyan-500/20 right-3 top-3 md:-right-16 md:-top-2"
 >
    ✕
 </button>
+
+
+
+  <div className="h-full overflow-y-auto px-5 pt-16 pb-5 md:px-10 md:pt-10 md:pb-10">
         <h2 className="text-center text-5xl font-extrabold tracking-wide text-white md:text-6xl">
   Historic Moments
 </h2>
@@ -105,6 +111,7 @@ export default function HistoricMomentsModal({
     </div>
   </div>
 </div>
+      </div>
       </div>
     </div>
   );
