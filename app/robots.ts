@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
     },
     sitemap:
-      "https://messians-of-bengal.vercel.app/sitemap.xml",
+      "https://messiansofbengal.com/sitemap.xml",
   };
 }

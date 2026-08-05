@@ -50,7 +50,7 @@ openGraph: {
   title: "Messians of Bengal",
   description:
     "One of Bengal's biggest Lionel Messi fan communities. Explore exclusive jerseys, connect with fellow fans, and celebrate football together.",
-  url: "https://messians-of-bengal.vercel.app",
+  url: "https://messiansofbengal.com",
   siteName: "Messians of Bengal",
   images: [
     {

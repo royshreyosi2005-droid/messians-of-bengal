@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://messians-of-bengal.vercel.app",
+      url: "https://messiansofbengal.com",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
