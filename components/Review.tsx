@@ -14,25 +14,39 @@ export default function Reviews() {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
-
+const [email, setEmail] = useState("");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
-  if (submitting) return;
+  const trimmedEmail = email.trim().toLowerCase();
+
+if (!trimmedEmail.endsWith("@gmail.com")) {
+  alert("Please enter a valid Gmail address.");
+  return;
+}
+
+setEmail(trimmedEmail);
+
+  if (!name.trim() || !message.trim() || rating === 0) {
+  alert("Please complete all required fields.");
+  return;
+}
+
+if (submitting) return;
 
 setSubmitting(true);
-
-
-  if (!name.trim() || !message.trim() || rating === 0) return;
 
   const formData = new FormData();
 
   formData.append("name", name);
+  formData.append("email", email);
   formData.append("rating", rating.toString());
   formData.append("message", message);
 
@@ -130,6 +144,20 @@ const textAreaRef = useRef<HTMLTextAreaElement>(null);
             onChange={(e) => setName(e.target.value)}
             className="h-12 rounded-xl border border-white/10 bg-slate-950/30 px-5 text-center text-lg text-white placeholder:text-slate-500 outline-none transition duration-300 focus:border-sky-400"
           />
+
+          <div className="w-full">
+  <input
+    type="email"
+    placeholder="Your Gmail"
+    value={email}
+    onChange={(e) => {
+      setEmail(e.target.value);
+    }}
+    className="h-12 flex-1 rounded-xl border border-white/10 bg-slate-950/30 px-5 text-center text-lg text-white placeholder:text-slate-500 outline-none transition duration-300 focus:border-sky-400"
+  />
+
+  
+</div>
 <p className="text-center text-lg text-slate-300">
   Rate Your Experience
 </p>

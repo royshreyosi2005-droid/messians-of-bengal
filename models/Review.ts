@@ -7,6 +7,13 @@ const ReviewSchema = new Schema(
       required: true,
     },
 
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+    },
+
     rating: {
       type: Number,
       required: true,

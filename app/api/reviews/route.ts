@@ -12,35 +12,39 @@ export async function POST(req: Request) {
     const formData = await req.formData();
 
     const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
     const rating = Number(formData.get("rating"));
     const message = formData.get("message") as string;
 
     const imageFiles = formData.getAll("images") as File[];
 
-if (imageFiles.length > 4) {
-  return NextResponse.json(
-    {
-      success: false,
-      message: "You can upload a maximum of 4 images.",
-    },
-    { status: 400 }
-  );
-}
+    // Maximum 4 images
+    if (imageFiles.length > 4) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "You can upload a maximum of 4 images.",
+        },
+        { status: 400 }
+      );
+    }
 
-    const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+    // Maximum 5 MB per image
+    const MAX_SIZE = 5 * 1024 * 1024;
 
-for (const file of imageFiles) {
-  if (file.size > MAX_SIZE) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Each image must be smaller than 5 MB.",
-      },
-      { status: 400 }
-    );
-  }
-}
+    for (const file of imageFiles) {
+      if (file.size > MAX_SIZE) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Each image must be smaller than 5 MB.",
+          },
+          { status: 400 }
+        );
+      }
+    }
 
+    // Required fields
     if (!name || !message || !rating) {
       return NextResponse.json(
         {
@@ -53,27 +57,31 @@ for (const file of imageFiles) {
 
     const imageUrls: string[] = [];
 
+    // Upload images to Cloudinary
     for (const file of imageFiles) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
       const result: any = await new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
-  {
-    folder: "messians-of-bengal/reviews",
+          {
+            folder: "messians-of-bengal/reviews",
 
-    transformation: [
-      {
-        width: 1200,
-        crop: "limit",
-        quality: "auto",
-        fetch_format: "auto",
-      },
-    ],
-  },
+            transformation: [
+              {
+                width: 1200,
+                crop: "limit",
+                quality: "auto",
+                fetch_format: "auto",
+              },
+            ],
+          },
           (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
           }
         );
 
@@ -83,8 +91,10 @@ for (const file of imageFiles) {
       imageUrls.push(result.secure_url);
     }
 
+    // Create review
     const review = await Review.create({
       name,
+      email: email || "",
       rating,
       message,
       images: imageUrls,
@@ -94,7 +104,6 @@ for (const file of imageFiles) {
       success: true,
       review,
     });
-
   } catch (error) {
     console.error(error);
 
@@ -107,6 +116,7 @@ for (const file of imageFiles) {
     );
   }
 }
+
 export async function GET() {
   try {
     await connectDB();
