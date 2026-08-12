@@ -147,13 +147,13 @@ const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
           <div className="w-full">
   <input
-    type="email"
+    type="text"
     placeholder="Your Gmail"
     value={email}
     onChange={(e) => {
       setEmail(e.target.value);
     }}
-    className="h-12 flex-1 rounded-xl border border-white/10 bg-slate-950/30 px-5 text-center text-lg text-white placeholder:text-slate-500 outline-none transition duration-300 focus:border-sky-400"
+    className="h-12 w-full rounded-xl border border-white/10 bg-slate-950/30 px-5 text-center text-lg text-white placeholder:text-slate-500 outline-none transition duration-300 focus:border-sky-400"
   />
 
   

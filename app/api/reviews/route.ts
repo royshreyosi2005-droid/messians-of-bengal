@@ -12,9 +12,19 @@ export async function POST(req: Request) {
     const formData = await req.formData();
 
     const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
     const rating = Number(formData.get("rating"));
     const message = formData.get("message") as string;
+    const email = formData.get("email") as string;
+
+if (!email || !email.trim().toLowerCase().endsWith("@gmail.com")) {
+  return NextResponse.json(
+    {
+      success: false,
+      message: "Please provide a valid Gmail address.",
+    },
+    { status: 400 }
+  );
+}
 
     const imageFiles = formData.getAll("images") as File[];
 
