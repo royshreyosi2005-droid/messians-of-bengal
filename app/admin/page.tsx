@@ -67,6 +67,27 @@ useEffect(() => {
 
   checkAdmin();
 }, [router]);
+
+const toggleStock = async (id: string, currentStatus: boolean) => {
+  const res = await fetch(`/api/jersey/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      soldOut: !currentStatus,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    fetchJerseys();
+  } else {
+    alert("Failed to update stock status.");
+  }
+};
+
 const handleDelete = async (id: string) => {
   const confirmDelete = confirm("Are you sure you want to delete this jersey?");
 
@@ -271,6 +292,18 @@ if (!authorized) {
         <p className="font-semibold">{jersey.name}</p>
         <p>₹{jersey.price}</p>
       </div>
+
+<button
+  onClick={() => toggleStock(jersey._id, jersey.soldOut)}
+  className={`rounded px-4 py-2 font-semibold text-white ${
+    jersey.soldOut
+      ? "bg-green-500 hover:bg-green-600"
+      : "bg-yellow-500 hover:bg-yellow-600"
+  }`}
+>
+  {jersey.soldOut ? "Out of Stock" : "Available"}
+</button>
+
       <button
   onClick={() => {
   setEditingId(jersey._id);
